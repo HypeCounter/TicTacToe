@@ -150,7 +150,15 @@ public class GameController : MonoBehaviour {
         
 
         switch (contadorTurno) {
-            case 1:                
+            case 1:  
+                if (locaisMarcados[2]== 1)
+                {
+                    locaisMarcados[4] = 2;
+                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[4].interactable = false;
+
+                }
+                else
                     if (locaisMarcados[randomMark] == -100)
                     {
                         locaisMarcados[randomMark] = 2;
@@ -176,12 +184,49 @@ public class GameController : MonoBehaviour {
             case 2:
                 
                 break;
-            case 3:   //turno de counter           
+            case 3:   //turno de counter   
+                if (locaisMarcados[0] == 1 && locaisMarcados[2] == 1 && locaisMarcados[1] == -100)
+                {
+
+                    locaisMarcados[1] = 2;
+                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[1].interactable = false;
+                }
+                else
+                if (locaisMarcados[0] == 1 && locaisMarcados[3] == 1 && locaisMarcados[6] == -100)
+                {
+                    locaisMarcados[6] = 2;
+                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[6].interactable = false;
+                }
+                else
+                if (locaisMarcados[0] == 1 && locaisMarcados[6] == 1 && locaisMarcados[3] == -100)
+                {
+                    locaisMarcados[3] = 2;
+                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[3].interactable = false;
+                }
+                else
+                if (locaisMarcados[0] == 1 && locaisMarcados[8] == 1 && locaisMarcados[4] == -100)
+                {
+
+                    locaisMarcados[4] = 2;
+                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[4].interactable = false;
+                }
+                else
                 if (locaisMarcados[0] == 1 && locaisMarcados[1] == 1 && locaisMarcados[2] == -100)
                 {
                     locaisMarcados[2] = 2;
                     tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
                     tictactoeEspaco[2].interactable = false;
+                }
+                else
+                if (locaisMarcados[0] == 1 && locaisMarcados[4] == 1 && locaisMarcados[8] == -100)
+                {
+                    locaisMarcados[8] = 2;
+                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[8].interactable = false;
                 }
                 else
                 if (locaisMarcados[2] == 1 && locaisMarcados[8] == 1 && locaisMarcados[5] == -100)
@@ -212,13 +257,7 @@ public class GameController : MonoBehaviour {
                     tictactoeEspaco[4].interactable = false;
                 }
                 else
-                if (locaisMarcados[0] == 1 && locaisMarcados[3] == 1 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
+                
                 if (locaisMarcados[1] == 1 && locaisMarcados[4] == 1 && locaisMarcados[7] == -100)
                 {
                     locaisMarcados[7] = 2;
@@ -226,21 +265,7 @@ public class GameController : MonoBehaviour {
                     tictactoeEspaco[7].interactable = false;
                 }
                 else
-                if (locaisMarcados[0] == 1 && locaisMarcados[6] == 1 && locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[8] == 1 && locaisMarcados[4] == -100)
-                {
-
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
+                
                 if (locaisMarcados[2] == 1 && locaisMarcados[6]==1 && locaisMarcados[4] == -100)
                 {
 
@@ -249,14 +274,7 @@ public class GameController : MonoBehaviour {
                     tictactoeEspaco[4].interactable = false;
                 }
                 else
-                if (locaisMarcados[0] == 1 && locaisMarcados[2] == 1 && locaisMarcados[1] == -100)
-                {
-
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-                else
+                
                 if (locaisMarcados[6] == 1 && locaisMarcados[8] == 1 && locaisMarcados[7] == -100)
                 {
 
@@ -298,11 +316,11 @@ public class GameController : MonoBehaviour {
                     tictactoeEspaco[2].interactable = false;
                 }
                 else
-                if (locaisMarcados[0] == -100)
+                if (locaisMarcados[6] == -100)
                 {
-                    locaisMarcados[0] = 2;
-                    tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[0].interactable = false;
+                    locaisMarcados[6] = 2;
+                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[6].interactable = false;
                 }
                 else
                 
@@ -322,7 +340,14 @@ public class GameController : MonoBehaviour {
                 tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
                 tictactoeEspaco[4].interactable = false;
                 }
-                
+                else
+                if (locaisMarcados[1] == -100)
+                {
+                    locaisMarcados[1] = 2;
+                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[1].interactable = false;
+                }
+
 
                 break;
             case 4:
@@ -576,6 +601,13 @@ public class GameController : MonoBehaviour {
                     locaisMarcados[7] = 2;
                     tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
                     tictactoeEspaco[7].interactable = false;
+                }
+                else
+                if (locaisMarcados[0] == 1 && locaisMarcados[4] == 1 && locaisMarcados[8] == -100)
+                {
+                    locaisMarcados[8] = 2;
+                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+                    tictactoeEspaco[8].interactable = false;
                 }
                 else
 

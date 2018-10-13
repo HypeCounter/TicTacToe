@@ -29,10 +29,11 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        isCPU = false;
+        isCPU = false; //inicia turno com player
         GameSetup();
 	}
     void GameSetup() {
+        isCPU = false;
         turnoID = 0;
         contadorTurno = 0;
         iconesTurno[0].SetActive(true);
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour {
         for (int i = 0; i < tictactoeEspaco.Length; i++) {
 
             tictactoeEspaco[i].interactable = true;
-            tictactoeEspaco[i].GetComponent<Image>().sprite = null;
+            tictactoeEspaco[i].GetComponent<Image>().sprite = null; //limpa o jogo
                 }
         for (int i = 0; i < locaisMarcados.Length; i++) {
             locaisMarcados[i] = -100; 
@@ -48,6 +49,8 @@ public class GameController : MonoBehaviour {
         }
 
     }
+
+    // Verificar vitoria em horizontal vertical e diagonal
     bool WinnerCheck()
     {
         int vitoria1 = locaisMarcados[0] + locaisMarcados[1] + locaisMarcados[2];
@@ -73,6 +76,7 @@ public class GameController : MonoBehaviour {
         return false;
 
     }
+
     public void TicTacToeButton( int queNumero) {
         if (!isCPU)
         {
@@ -142,521 +146,100 @@ public class GameController : MonoBehaviour {
     //AI do CPU
 
 
-    public void CPUmove() {
+    public void CPUmove()
+    {
 
         turnoID = 1;
+
         
-        int randomMark = Random.Range(0, 8);
-        
+      
 
-        switch (contadorTurno) {
-            case 1:  
-                if (locaisMarcados[2]== 1)
-                {
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
+        switch (contadorTurno)
+        {
+            case 1:
 
-                }
-                else
-                    if (locaisMarcados[randomMark] == -100)
-                    {
-                        locaisMarcados[randomMark] = 2;
-                        tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
-                        tictactoeEspaco[randomMark].interactable = false;
-                    }                
-                else
-
+                /*  - - -
+                    - X -
+                    - - -
+                */
                 if (locaisMarcados[4] == -100)
                 {
                     locaisMarcados[4] = 2;
                     tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
                     tictactoeEspaco[4].interactable = false;
+                    TrocaTurno();
                 }
                 else
-                if (locaisMarcados[2] == -100)
-                {
-                    locaisMarcados[2] = 2;
-                    tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[2].interactable = false;
+
+                /*  - - X
+                    - O -
+                    - - -
+                */
+                if (contadorTurno == 1) {
+                    MovimentoTaticoAI();
                 }
+
+
                 break;
             case 2:
-                
+            
                 break;
-            case 3:   //turno de counter   
-                if (locaisMarcados[0] == 1 && locaisMarcados[2] == 1 && locaisMarcados[1] == -100)
-                {
+            case 3:
 
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[3] == 1 && locaisMarcados[6] == -100)
+                //Countera todas as possibilidades de vitoria no caso 4
+                CounterAI();
+                if (contadorTurno == 3)
                 {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
+                    MovimentoTaticoAI();
                 }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[6] == 1 && locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[8] == 1 && locaisMarcados[4] == -100)
-                {
-
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[1] == 1 && locaisMarcados[2] == -100)
-                {
-                    locaisMarcados[2] = 2;
-                    tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[2].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[4] == 1 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[2] == 1 && locaisMarcados[8] == 1 && locaisMarcados[5] == -100)
-                {
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == 1 && locaisMarcados[7] == 1 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[8] == 1 && locaisMarcados[7] == 1 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                if (locaisMarcados[1] == 1 && locaisMarcados[7] == 1 && locaisMarcados[4] == -100)
-                {
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
-                
-                if (locaisMarcados[1] == 1 && locaisMarcados[4] == 1 && locaisMarcados[7] == -100)
-                {
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                }
-                else
-                
-                if (locaisMarcados[2] == 1 && locaisMarcados[6]==1 && locaisMarcados[4] == -100)
-                {
-
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
-                
-                if (locaisMarcados[6] == 1 && locaisMarcados[8] == 1 && locaisMarcados[7] == -100)
-                {
-
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                }
-                else
-                if (locaisMarcados[2] == 1 && locaisMarcados[6] == 1 && locaisMarcados[4] == -100)
-                {
-
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
-
-                if (locaisMarcados[2] == 1 && locaisMarcados[8] == 1 && locaisMarcados[5] == -100)
-                {
-
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[2] == 1 && locaisMarcados[5] == 1 && locaisMarcados[8] == -100)
-                {
-
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[5] == 1 && locaisMarcados[8] == 1 && locaisMarcados[2] == -100)
-                {
-
-                    locaisMarcados[2] = 2;
-                    tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[2].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                
-                
-                if (locaisMarcados[randomMark] == -100)
-                {
-                    locaisMarcados[randomMark] = 2;
-                    tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[randomMark].interactable = false;
-                }
-                else
-
-
-                if (locaisMarcados[4] == -100)
-                {
-                locaisMarcados[4] = 2;
-                tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                tictactoeEspaco[4].interactable = false;
-                }
-                else
-                if (locaisMarcados[1] == -100)
-                {
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-
 
                 break;
             case 4:
+               
                 break;
-            case 5: // turno de fechamento
-                if (locaisMarcados[4] == 2 && locaisMarcados[3] == 2 && locaisMarcados[5] == -100)
-                {
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == 2 && locaisMarcados[5] == 2 && locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == 2 && locaisMarcados[7] == 2 && locaisMarcados[1] == -100)
-                {
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-                else
+            case 5:
 
-                if (locaisMarcados[4] == 2 && locaisMarcados[0] == 2 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == 2 && locaisMarcados[2] == 2 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == 2 && locaisMarcados[0] == 2 && locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                if (locaisMarcados[2] == 2 && locaisMarcados[8] == 2 && locaisMarcados[5] == -100)
-                {
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[1] == 2 && locaisMarcados[4] == 2 && locaisMarcados[7] == -100)
-                {
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                }
-                else
-                if (locaisMarcados[3] == 2 && locaisMarcados[4] == 2 && locaisMarcados[5] == -100)
-                {
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[7] == 2 && locaisMarcados[8] == 2 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == 2 && locaisMarcados[7] == 2 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == -100)
-                {
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
 
-                    if (locaisMarcados[randomMark] == -100)
-                    {
-                    locaisMarcados[randomMark] = 2;
-                    tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[randomMark].interactable = false;
-                    }
-                else
-                    if (locaisMarcados[0] == -100)
-                    {
-                    locaisMarcados[0] = 2;
-                    tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[0].interactable = false;
-                    }
-                else
-                    if (locaisMarcados[7] == -100)
-                    {
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                    }
-                else
-                
-                
-                    if (locaisMarcados[3] == -100)
-                    {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                    }
+                ProcuraVitoriaAI();
+                if (contadorTurno == 5 ) {
+                    CounterAI();
+                }
+                if (contadorTurno == 5)
+                {
+                    MovimentoTaticoAI();
+                }
 
                 break;
             case 6:
-
+               
                 break;
             case 7:
-                if (locaisMarcados[4] == 2 && locaisMarcados[7] == 2 && locaisMarcados[1] == -100)
-                {
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == 2 && locaisMarcados[0] == 2 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == 2 && locaisMarcados[5] == 2 && locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == 2 && locaisMarcados[2] == 2 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == 2 && locaisMarcados[0] == 2 && locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[1] == 1 && locaisMarcados[2] == -100)
-                {
-                    locaisMarcados[2] = 2;
-                    tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[2].interactable = false;
-                }
-                else
-                if (locaisMarcados[2] == 1 && locaisMarcados[8] == 1 && locaisMarcados[1] == -100)
-                {
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == 1 && locaisMarcados[7] == 1 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
-                if (locaisMarcados[8] == 1 && locaisMarcados[7] == 1 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                if (locaisMarcados[2] == 2 && locaisMarcados[8] == 2 && locaisMarcados[5] == -100)
-                {
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[randomMark] == -100)
-                {
-                    locaisMarcados[randomMark] = 2;
-                    tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[randomMark].interactable = false;
-                }
-                else
-                if (locaisMarcados[1] == 2 && locaisMarcados[4] == 2 && locaisMarcados[7] == -100)
-                {
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                }
-                else
-                if (locaisMarcados[3] == 2 && locaisMarcados[4] == 2 && locaisMarcados[5] == -100)
-                {
-                    locaisMarcados[5] = 2;
-                    tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[5].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[3] == 1 && locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                if (locaisMarcados[4] == -100)
-                {
-                    locaisMarcados[4] = 2;
-                    tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[4].interactable = false;
-                }
-                else
 
-                    if (locaisMarcados[randomMark] == -100)
+                ProcuraVitoriaAI();
+                if (contadorTurno == 7)
                 {
-                    locaisMarcados[randomMark] = 2;
-                    tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[randomMark].interactable = false;
+                    CounterAI();
                 }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[2] == 1 && locaisMarcados[1] == -100)
+                if (contadorTurno == 7)
                 {
+                    MovimentoTaticoAI();
+                }
 
-                    locaisMarcados[1] = 2;
-                    tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[1].interactable = false;
-                }
-                else
-                if (locaisMarcados[6] == 1 && locaisMarcados[8] == 1 && locaisMarcados[7] == -100)
-                {
 
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                }
-                else
-                if (locaisMarcados[0] == 1 && locaisMarcados[4] == 1 && locaisMarcados[8] == -100)
-                {
-                    locaisMarcados[8] = 2;
-                    tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[8].interactable = false;
-                }
-                else
 
-                    if (locaisMarcados[6] == -100)
-                {
-                    locaisMarcados[6] = 2;
-                    tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[6].interactable = false;
-                }
-                else
-                    if (locaisMarcados[0] == -100)
-                {
-                    locaisMarcados[0] = 2;
-                    tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[0].interactable = false;
-                }               
-               
-                else
-                    if (locaisMarcados[3] == -100)
-                {
-                    locaisMarcados[3] = 2;
-                    tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[3].interactable = false;
-                }
-                else
-                    if (locaisMarcados[randomMark] == -100)
-                    {
-                    locaisMarcados[randomMark] = 2;
-                    tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[randomMark].interactable = false;
-                    }
-                
-                else
-                    if (locaisMarcados[7] == -100)
-                    {
-                    locaisMarcados[7] = 2;
-                    tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
-                    tictactoeEspaco[7].interactable = false;
-                    }
-                
-                   
-                
-
-                    break;
-            case 8:
                 break;
-            
+            case 8:
+              
+                break;
+
 
         }
+      
+
+    }
+
+    private void TrocaTurno()
+    {
         if (contadorTurno > 4)
         {
             bool isWinner = WinnerCheck();
@@ -671,15 +254,786 @@ public class GameController : MonoBehaviour {
         iconesTurno[0].SetActive(true);
         iconesTurno[1].SetActive(false);
         isCPU = false;
+    }
 
+
+
+    /*
+     * 
+     * CASO NÃO COUNTERE OU VENÇA CPU PROCURA MONTAR V
+     * 
+     * 
+     */
+
+
+    private void MovimentoTaticoAI()
+    {
+        //Preenche criação de V
+
+
+        int randomMark = Random.Range(2, 7);
+
+        /* - - X?
+           X?X?X?
+           X?- -
+                 */
+
+        if (locaisMarcados[randomMark] == -100)
+        {
+            locaisMarcados[randomMark] = 2;
+            tictactoeEspaco[randomMark].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[randomMark].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+     
+
+
+
+        /* - X -
+           - - -
+           - - -
+           */
+
+        if (locaisMarcados[1] == -100)
+        {
+            locaisMarcados[1] = 2;
+            tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[1].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           - - -
+           - X -
+           */
+
+        if (locaisMarcados[7] == -100)
+        {
+            locaisMarcados[7] = 2;
+            tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[7].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           - - -
+           X - -
+        */
+
+       if (locaisMarcados[6] == -100)
+       {
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+
+
+        /* - - X
+           - - -
+           - - -
+   */
+
+        if (locaisMarcados[2] == -100)
+        {
+            locaisMarcados[2] = 2;
+            tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[2].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+
+
+        /* X - -
+           - - -
+           - - -
+   */
+
+        if (locaisMarcados[0] == -100)
+        {
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - X
+           - - -
+           - - -
+*/
+
+        if (locaisMarcados[8] == -100)
+        {
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+
+
+    }
+
+
+    /*
+     * 
+     * CPU TENTA VENCER
+     * 
+     * 
+     */
+
+
+    private void ProcuraVitoriaAI()
+    {
+        //Metodo de vitoria IA
+
+        /* O - O
+           - - -
+           - - -  
+        */
+
+        if (locaisMarcados[0] == 2 && locaisMarcados[2] == 2 && locaisMarcados[1] == -100)
+        {
+
+            locaisMarcados[1] = 2;
+            tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[1].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* O O -
+           - - -
+           - - -
+        */
+
+        if (locaisMarcados[0] == 2 && locaisMarcados[1] == 2 && locaisMarcados[2] == -100)
+        {
+
+            locaisMarcados[2] = 2;
+            tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[2].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /* - O O
+           - - -
+           - - -
+    */
+
+        if (locaisMarcados[1] == 2 && locaisMarcados[2] == 2 && locaisMarcados[0] == -100)
+        {
+
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+        /* O - -
+           O - -
+           - - -
+        */
+
+        if (locaisMarcados[0] == 2 && locaisMarcados[3] == 2 && locaisMarcados[6] == -100)
+        {
+
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* O - -
+           - - -
+           O - -
+        */
+
+        if (locaisMarcados[0] == 2 && locaisMarcados[6] == 2 && locaisMarcados[3] == -100)
+        {
+
+            locaisMarcados[3] = 2;
+            tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[3].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* - - -
+           O - -
+           O - -
+        */
+
+        if (locaisMarcados[3] == 2 && locaisMarcados[6] == 2 && locaisMarcados[0] == -100)
+        {
+
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+        /* O - -
+           - O -
+           - - -
+      */
+
+        if (locaisMarcados[0] == 2 && locaisMarcados[4] == 2 && locaisMarcados[8] == -100)
+        {
+
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* O - -
+           - - -
+           - - O
+    */
+
+        if (locaisMarcados[0] == 2 && locaisMarcados[8] == 2 && locaisMarcados[4] == -100)
+        {
+
+            locaisMarcados[4] = 2;
+            tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[4].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* - - -
+           - O -
+           - - O
+  */
+        if (locaisMarcados[4] == 2 && locaisMarcados[8] == 2 && locaisMarcados[0] == -100)
+        {
+
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* - O -
+           - O -
+           - - -
+  */
+
+        if (locaisMarcados[1] == 2 && locaisMarcados[4] == 2 && locaisMarcados[7] == -100)
+        {
+
+            locaisMarcados[7] = 2;
+            tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[7].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /*  - O -
+            - - -
+            - O -
+   */
+
+        if (locaisMarcados[1] == 2 && locaisMarcados[7] == 2 && locaisMarcados[4] == -100)
+        {
+
+            locaisMarcados[4] = 2;
+            tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[4].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /*  - - -
+           - O -
+           - O -
+  */
+
+        if (locaisMarcados[4] == 2 && locaisMarcados[7] == 2 && locaisMarcados[1] == -100)
+        {
+
+            locaisMarcados[1] = 2;
+            tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[1].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+
+        /*  - - O
+            - O -
+            - - -
+                   */
+
+        if (locaisMarcados[2] == 2 && locaisMarcados[4] == 2 && locaisMarcados[6] == -100)
+        {
+
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* - - O
+           - - -
+           O - -
+                  */
+
+        if (locaisMarcados[2] == 2 && locaisMarcados[6] == 2 && locaisMarcados[4] == -100)
+        {
+
+            locaisMarcados[4] = 2;
+            tictactoeEspaco[4].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[4].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           - O -
+           O - -
+               */
+
+        if (locaisMarcados[4] == 2 && locaisMarcados[6] == 2 && locaisMarcados[2] == -100)
+        {
+
+            locaisMarcados[2] = 2;
+            tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[2].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+
+        /* - - O
+           - - O
+           - - -
+                              */
+
+        if (locaisMarcados[2] == 2 && locaisMarcados[5] == 2 && locaisMarcados[8] == -100)
+        {
+
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /* - - O
+           - - -
+           - - O
+                             */
+
+        if (locaisMarcados[2] == 2 && locaisMarcados[8] == 2 && locaisMarcados[5] == -100)
+        {
+
+            locaisMarcados[5] = 2;
+            tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[5].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           - - O
+           - - O
+                             */
+
+        if (locaisMarcados[5] == 2 && locaisMarcados[8] == 2 && locaisMarcados[2] == -100)
+        {
+
+            locaisMarcados[2] = 2;
+            tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[2].interactable = false;
+            TrocaTurno();
+
+        }
+        else
+
+        /* - - -
+           - O O
+           - - -
+                             */
+
+        if (locaisMarcados[4] == 2 && locaisMarcados[5] == 2 && locaisMarcados[3] == -100)
+        {
+
+            locaisMarcados[3] = 2;
+            tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[3].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           O O -
+           - - -
+                             */
+
+        if (locaisMarcados[4] == 2 && locaisMarcados[3] == 2 && locaisMarcados[5] == -100)
+        {
+
+            locaisMarcados[5] = 2;
+            tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[5].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           - - -
+           O O -
+                            */
+
+        if (locaisMarcados[6] == 2 && locaisMarcados[7] == 2 && locaisMarcados[8] == -100)
+        {
+
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /* - - -
+           - - -
+           O - O
+                            */
+
+        if (locaisMarcados[6] == 2 && locaisMarcados[8] == 2 && locaisMarcados[7] == -100)
+        {
+
+            locaisMarcados[7] = 2;
+            tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[7].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /* - - -
+           - - -
+           - O O
+                            */
+
+        if (locaisMarcados[7] == 2 && locaisMarcados[8] == 2 && locaisMarcados[6] == -100)
+        {
+
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+
+
+        
+    }
+
+    /*
+     * 
+     * COUNTER DA CPU
+     * 
+     * 
+     */
+
+
+
+
+    private void CounterAI()
+    {
+       /* O X O
+          - X -
+          - - -
+      */
+
+        if (locaisMarcados[0] == 1 && locaisMarcados[2] == 1 && locaisMarcados[1] == -100)
+        {
+
+            locaisMarcados[1] = 2;
+            tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[1].interactable = false;
+            TrocaTurno();
+        }
+        /* O O X
+           - X -
+           - - -
+       */
+        else
+        if (locaisMarcados[0] == 1 && locaisMarcados[1] == 1 && locaisMarcados[2] == -100)
+        {
+            locaisMarcados[2] = 2;
+            tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[2].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /*  O - -
+            X X -
+            O - -
+        */
+        if (locaisMarcados[0] == 1 && locaisMarcados[6] == 1 && locaisMarcados[3] == -100)
+        {
+            locaisMarcados[3] = 2;
+            tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[3].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /* O - -
+           O X -
+           X - -
+       */
+        if (locaisMarcados[0] == 1 && locaisMarcados[3] == 1 && locaisMarcados[6] == -100)
+        {
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /*  O - X
+            - O -
+            - - X
+        */
+
+        if (locaisMarcados[0] == 1 && locaisMarcados[4] == 1 && locaisMarcados[8] == -100)
+        {
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+         /* X O O
+            - X -
+            - - -
+        */
+
+         if (locaisMarcados[1] == 1 && locaisMarcados[2] == 1 && locaisMarcados[0] == -100)
+        {
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+
+        else
+
+        /*  - O X
+            - O -
+            - X -
+        */
+        if (locaisMarcados[1] == 1 && locaisMarcados[4] == 1 && locaisMarcados[7] == -100)
+        {
+            locaisMarcados[7] = 2;
+            tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[7].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* X - -
+           O X -
+           O - -
+       */
+
+        if (locaisMarcados[3] == 1 && locaisMarcados[6] == 1 && locaisMarcados[0] == -100)
+        {
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+           - X -
+           O O X
+       */
+
+
+        if (locaisMarcados[6] == 1 && locaisMarcados[7] == 1 && locaisMarcados[8] == -100)
+        {
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /* - - -
+           - X -
+           X O O
+       */
+
+        if (locaisMarcados[7] == 1 && locaisMarcados[8] == 1 && locaisMarcados[6] == -100)
+        {
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - -
+          - X -
+          O X O
+      */
+
+        if (locaisMarcados[6] == 1 && locaisMarcados[8] == 1 && locaisMarcados[7] == -100)
+        {
+            locaisMarcados[7] = 2;
+            tictactoeEspaco[7].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[7].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+        /* - - O
+           - X O
+           - - X
+       */
+
+        if (locaisMarcados[2] == 1 && locaisMarcados[5] == 1 && locaisMarcados[8] == -100)
+        {
+            locaisMarcados[8] = 2;
+            tictactoeEspaco[8].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[8].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+
+        /* - - O
+           - O -
+           X - -
+       */
+
+        if (locaisMarcados[2] == 1 && locaisMarcados[4] == 1 && locaisMarcados[6] == -100)
+        {
+            locaisMarcados[6] = 2;
+            tictactoeEspaco[6].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[6].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+       /* - X -
+          - O -
+          - O -
+      */
+
+        if (locaisMarcados[7] == 1 && locaisMarcados[4] == 1 && locaisMarcados[1] == -100)
+        {
+            locaisMarcados[1] = 2;
+            tictactoeEspaco[1].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[1].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+
+        /* - - O
+           - X X
+           - - O
+     */
+
+        if (locaisMarcados[2] == 1 && locaisMarcados[8] == 1 && locaisMarcados[5] == -100)
+        {
+            locaisMarcados[5] = 2;
+            tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[5].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+         /* - - X
+            - X O
+            - - O
+        */
+
+         if (locaisMarcados[5] == 1 && locaisMarcados[8] == 1 && locaisMarcados[2] == -100)
+        {
+            locaisMarcados[2] = 2;
+            tictactoeEspaco[2].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[2].interactable = false;
+            TrocaTurno();
+        }
+        else
+
+         /* X - X
+            - O -
+            - - O
+        */
+
+         if (locaisMarcados[4] == 1 && locaisMarcados[8] == 1 && locaisMarcados[0] == -100)
+        {
+            locaisMarcados[0] = 2;
+            tictactoeEspaco[0].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[0].interactable = false;
+            TrocaTurno();
+        }
+
+
+        else
+
+         /* - - -
+            X O O
+            - - -
+        */
+
+         if (locaisMarcados[4] == 1 && locaisMarcados[5] == 1 && locaisMarcados[3] == -100)
+        {
+            locaisMarcados[3] = 2;
+            tictactoeEspaco[3].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[3].interactable = false;
+            TrocaTurno();
+        }
+        else
+        /* - - -
+          O O X
+          - - -
+      */
+
+        if (locaisMarcados[4] == 1 && locaisMarcados[3] == 1 && locaisMarcados[5] == -100)
+        {
+            locaisMarcados[5] = 2;
+            tictactoeEspaco[5].image.sprite = playerIcones[turnoID];
+            tictactoeEspaco[5].interactable = false;
+            TrocaTurno();
+        }
     }
 
 
 
 
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 		if (isCPU)
         {
            

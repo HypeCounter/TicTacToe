@@ -150,9 +150,18 @@ public class GameController : MonoBehaviour {
     {
 
         turnoID = 1;
-
-        
-      
+        int valorDificuldade = 0;
+        if (oPlayerScore <= xPlayerScore)
+        {
+            valorDificuldade = 20;
+        }
+        else
+        {
+            valorDificuldade = 100;
+        }
+        int fatorhumano = Random.Range(0, valorDificuldade);
+        // fator humano irá forçar a cpu a não counterar o jogador com chance de 5% caso esteja perdendo e 1% caso esteja ganhando
+        print("Fator humano " + fatorhumano);
 
         switch (contadorTurno)
         {
@@ -201,7 +210,7 @@ public class GameController : MonoBehaviour {
 
 
                 ProcuraVitoriaAI();
-                if (contadorTurno == 5 ) {
+                if (contadorTurno == 5 && fatorhumano != 1) {
                     CounterAI();
                 }
                 if (contadorTurno == 5)
@@ -216,7 +225,7 @@ public class GameController : MonoBehaviour {
             case 7:
 
                 ProcuraVitoriaAI();
-                if (contadorTurno == 7)
+                if (contadorTurno == 7 && fatorhumano != 1)
                 {
                     CounterAI();
                 }
